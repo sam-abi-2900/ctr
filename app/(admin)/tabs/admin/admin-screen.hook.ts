@@ -6,6 +6,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { colors as newColor } from '@/constants/theme';
 import { useState, useCallback } from 'react';
 import { staticStyles, themedStyles } from './styles';
+import { URLs,EVENTS,NOTIFICATION } from '@/app/utils/url-const';
 
 type Event = {
     id: string;
@@ -31,7 +32,8 @@ const useAdminScreen = () => {
     const fetchEvents = useCallback(async () => {
         try {
             setIsLoading(true);
-            const response = await fetch('http://localhost:3000/api/events/unassigned');
+            // const response = await fetch('http://localhost:3000/api/events/unassigned');
+            const response = await fetch(`${URLs.API_ADMIN_BASE_URL}${EVENTS.UNASSIGNED_EVENTS}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -48,7 +50,8 @@ const useAdminScreen = () => {
 
     const fetchRequests = useCallback(async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/requests/pending');
+            // const response = await fetch('http://localhost:3000/api/requests/pending');
+            const response = await fetch(`${URLs.API_ADMIN_BASE_URL}${NOTIFICATION.PENDING_NOTIFICATION}`)
             const data = await response.json();
             setRequestsLength(data.length);
         } catch (error) {
@@ -58,10 +61,12 @@ const useAdminScreen = () => {
 
     const handleDelete = async (eventId: string) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
+            // const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
+            //     method: 'DELETE',
+            // });
+            const response = await fetch(`${URLs.API_ADMIN_BASE_URL}${EVENTS.DELETE_EVENT}/${eventId}`, {
                 method: 'DELETE',
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

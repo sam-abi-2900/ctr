@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { Clock, User, ChevronDown, ShowerHead } from 'lucide-react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { colors as newColor } from '@/constants/theme';
+import { URLs,SUMMARY } from '@/app/utils/url-const';
 
 const DAVID_AVATAR = 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e';
 
@@ -62,7 +63,8 @@ const useSummary = () => {
             if (selectedYear) params.push(`year=${selectedYear}`);
             if (selectedWeek) params.push(`week=${selectedWeek}`);
             const query = params.length ? `?${params.join('&')}` : '';
-            const res = await fetch(`http://localhost:3000/api/vendor/admin/summary${query}`);
+            // const res = await fetch(`http://localhost:3000/api/vendor/admin/summary${query}`);
+            const res=await fetch(`${URLs.API_ADMIN_BASE_URL}${SUMMARY.GET_ALL}${query}`);
             const data = await res.json();
             setSummary(data.summary || []);
         } catch (e) {

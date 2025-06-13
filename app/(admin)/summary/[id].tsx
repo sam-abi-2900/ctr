@@ -5,6 +5,7 @@ import { ChevronLeft, Clock } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
 import { colors as newColor } from '@/constants/theme';
 import { useEffect, useState, useCallback } from 'react';
+import { URLs,SUMMARY } from '@/app/utils/url-const';
 
 // API response types
 interface DailySummary {
@@ -51,7 +52,8 @@ export default function UserHoursScreen() {
         setLoading(true);
         try {
             const query = `?${week ? `week=${week}&` : ''}${year ? `year=${year}` : ''}`;
-            const res = await fetch(`http://localhost:3000/api/admin/vendor-summary/${id}${query}`);
+            // const res = await fetch(`http://localhost:3000/api/admin/vendor-summary/${id}${query}`);
+            const res = await fetch(`${URLs.API_ADMIN_BASE_URL}${SUMMARY.GET_ONE}/${id}${query}`);
             const json = await res.json();
             setData(json);
         } catch (e) {

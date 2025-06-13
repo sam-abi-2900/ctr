@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTheme } from '../context/ThemeContext';
+import { URLs,EVENTS } from '@/app/utils/url-const';
 
 type Task = {
     task_id: string;
@@ -55,7 +56,8 @@ const useVendorDetail = ({ eventId, vendorId }: any) => {
 
     const fetchVendorDetail = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/event/detail/${eventId}/vendor/${vendorId}`);
+            // const response = await fetch(`http://localhost:3000/api/event/detail/${eventId}/vendor/${vendorId}`);
+            const response = await fetch(`${URLs.API_ADMIN_BASE_URL}${EVENTS.VENDOR_DETAILS}/${eventId}/vendor/${vendorId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
