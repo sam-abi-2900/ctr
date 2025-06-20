@@ -15,7 +15,9 @@ import Animated, {
 import { useEffect, useState } from 'react';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Checkbox from 'expo-checkbox';
+//here is the useAuth being imported
 import { useAuth } from '../_layout';
+import { loginWithAzureAppAuth } from '../utils/azureAuth';
 
 const { width, height } = Dimensions.get('window');
 
@@ -170,8 +172,14 @@ export default function LoginScreen() {
         </Animated.View>
     );
 
-    const handleLogin = () => {
-        login();
+    const handleLogin = async () => {
+        try {
+            await loginWithAzureAppAuth();
+            // Tokens are logged in the utility
+        } catch (e) {
+            // Optionally show error to user
+            console.error(e);
+        }
     };
 
     return (
